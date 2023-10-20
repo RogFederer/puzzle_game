@@ -321,19 +321,23 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
             //创建一个弹窗对象
             JDialog jDialog=new JDialog();
             //创建一个管理图片的容器对象
-            JLabel jLabel=new JLabel(new ImageIcon("puzzlegame\\image\\about.png"));
+            /*JLabel jLabel=new JLabel(new ImageIcon("puzzlegame\\image\\about.png"));
             //设置位置和宽高
             jLabel.setBounds(0,0,258,258);
             //把图片加入弹框中
-            jDialog.getContentPane().add(jLabel);
+            jDialog.getContentPane().add(jLabel);*/
             //设置弹框大小
-            jDialog.setSize(344,344);
+            jDialog.setSize(200,150);
             //设置弹框置顶
             jDialog.setAlwaysOnTop(true);
             //设置弹框居中
             jDialog.setLocationRelativeTo(null);
             //让弹框不关闭则无法点击下面的页面
             jDialog.setModal(true);
+
+            JLabel text = new JLabel("敬请期待");
+            text.setBounds(0, 0, 200, 150);
+            jDialog.getContentPane().add(text);
 
             jDialog.setVisible(true);
         } else if (obj == personItem) {
