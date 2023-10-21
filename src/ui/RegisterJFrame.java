@@ -3,8 +3,11 @@ package ui;
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 public class RegisterJFrame extends JFrame implements MouseListener {
+    StringBuilder username=new StringBuilder();
+    StringBuilder password=new StringBuilder();
     JButton register=new JButton();
     JButton reset=new JButton();
     JTextField userInput=new JTextField();
@@ -91,13 +94,71 @@ public class RegisterJFrame extends JFrame implements MouseListener {
             String username=userInput.getText();
             String password=passwordInput.getText();
             String repassword=passwordReInput.getText();
+            boolean userExist=false;
             if(!password.equals(repassword)){
                 System.out.println("两次输入密码不一致，请重新输入");
                 showJDialog("两次输入密码不一致，请重新输入");
             }
             else{
+                //首先检查用户名是否已存在
+                ArrayList<User> userList=LoginJFrame.getUserList();
+                for (User u :
+                        userList) {
+                    if(u.getUsername().equals(username)){
+                        userExist=true;
+                        System.out.println("用户名已存在，请重新输入");
+                        showJDialog("用户名已存在，请重新输入");
+                        break;
+                    }
+
+                }
+                if(!userExist){
+                    User u=new User(username,password);
+                    LoginJFrame.addUserList(u);
+                    System.out.println("注册成功！");
+                    showJDialog("注册成功！");
+                }
 
             }
+        } else if (obj==reset) {
+            //进行密码的重置，其中用户名必须是已经注册过的用户名，且两次输入的密码必须相同
+            String username=userInput.getText();
+            String password=passwordInput.getText();
+            String repassword=passwordReInput.getText();
+            //首先检查用户名是否存在
+            boolean userExist=false;
+            ArrayList<User> userList=LoginJFrame.getUserList();
+            for (User u :
+                    userList) {
+                if (u.getUsername().equals(username)){
+                    userExist=true;
+                    System.out.println("用户名存在，可以进行重置密码");
+                    break;
+                }
+            }
+            if(!userExist){
+                //用户名不存在
+                System.out.println("用户名不存在，请重试");
+                showJDialog("用户名不存在，请重试");
+            }
+            else{
+                if(!password.equals(repassword)){
+                    System.out.println("两次密码输入不一致，请重试");
+                    showJDialog("两次密码输入不一致，请重试");
+                }
+                else{
+                    for (User u :
+                            userList) {
+                        if(u.getUsername().equals(username)){
+                            u.setPassword(password);
+                            break;
+                        }
+                    }
+                    System.out.println("重置密码成功！");
+                    showJDialog("重置密码成功！");
+                }
+            }
+            
         }
     }
 

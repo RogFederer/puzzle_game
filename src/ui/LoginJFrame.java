@@ -19,6 +19,12 @@ public class LoginJFrame extends JFrame implements MouseListener {
         userList.add(new User("zhangsan","123456"));
         userList.add(new User("zhaowu","654321"));
     }
+    public static ArrayList<User> getUserList(){
+        return userList;
+    }
+    public static void addUserList(User u){
+        userList.add(u);
+    }
     public LoginJFrame() {
         //界面初始化
         initJFrame();
